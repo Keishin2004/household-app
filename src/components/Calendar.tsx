@@ -7,13 +7,21 @@ import { DatesSetArg, EventContentArg } from '@fullcalendar/core'
 import { Balance, CalendarContent, Transaction } from '../types'
 import { calculationDailyBalances } from '../utils/financeCalculations'
 import { formatCurrency } from '../utils/formatting'
+import interactionPlugin, { DateClickArg } from '@fullcalendar/interaction';
+import { Pallet } from '@mui/icons-material'
+import { useTheme } from '@mui/material'
+import { isSameMonth } from 'date-fns'
 
 interface CalendarProps{
-    monthlyTransactions: Transaction[],
-    setCurrentMonth: React.Dispatch<React.SetStateAction<Date>>
+    monthlyTransactions: Transaction[];
+    setCurrentMonth: React.Dispatch<React.SetStateAction<Date>>;
+    setCurrentDay: React.Dispatch<React.SetStateAction<string>>;
+    currentDay: string;
+    today: string;
 }
 
-const Calendar = ({monthlyTransactions, setCurrentMonth}: CalendarProps) => {
+const Calendar = ({monthlyTransactions, setCurrentMonth, setCurrentDay, currentDay, today}: CalendarProps) => {
+    const theme = useTheme();
     const events = [
         { title: 'Meeting', start: new Date(), income: 300, expense: 200, balance: 100 },
     ]
@@ -62,18 +70,34 @@ const Calendar = ({monthlyTransactions, setCurrentMonth}: CalendarProps) => {
 
     const calendarEvents = createCalendarEvents(dailyBalances);
 
+    const backgroundEvent = {
+        start: currentDay,
+        display: "background",
+        backgroundColor: theme.palette.incomeColor.light,
+    };
+
     const handleDateSet = (dateSetInfo: DatesSetArg) => {
-        setCurrentMonth(dateSetInfo.view.currentStart)
-    }
+        const currentMonth = dateSetInfo.view.currentStart;
+        setCurrentMonth(currentMonth);
+        const todayDate = new Date();
+        if(isSameMonth(todayDate, currentMonth)){
+            setCurrentDay(today);
+        }
+    };
+
+    const handleDateClick = (dateInfo: DateClickArg) => {
+        setCurrentDay(dateInfo.dateStr);
+    };
     
   return (
     <FullCalendar
         locale={jaLocale}
-        plugins={[dayGridPlugin]}
+        plugins={[dayGridPlugin, interactionPlugin]}
         initialView='dayGridMonth'
-        events={calendarEvents}
+        events={[...calendarEvents, backgroundEvent]}
         eventContent={renderEventContent}
         datesSet={handleDateSet}
+        dateClick={handleDateClick}
     />
   )
 }
