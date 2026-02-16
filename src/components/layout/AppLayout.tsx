@@ -18,7 +18,6 @@ import SideBar from '../common/SideBar';
 
 const drawerWidth = 240;
 
-
 export default function AppLayout() {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [isClosing, setIsClosing] = React.useState(false);
@@ -38,9 +37,14 @@ export default function AppLayout() {
     }
   };
 
-
   return (
-    <Box sx={{ display: 'flex', bgcolor: (theme) => theme.palette.grey[100], minHeight: "100vh" }}>
+    <Box
+      sx={{
+        display: 'flex',
+        bgcolor: (theme) => theme.palette.grey[100],
+        minHeight: '100vh',
+      }}
+    >
       <CssBaseline />
 
       {/* ヘッダー */}
@@ -68,17 +72,21 @@ export default function AppLayout() {
       </AppBar>
 
       {/* サイドバー */}
-      <SideBar 
-        drawerWidth = {drawerWidth}
-        mobileOpen = {mobileOpen}
-        handleDrawerClose = {handleDrawerClose}
-        handleDrawerTransitionEnd = {handleDrawerTransitionEnd}
+      <SideBar
+        drawerWidth={drawerWidth}
+        mobileOpen={mobileOpen}
+        handleDrawerClose={handleDrawerClose}
+        handleDrawerTransitionEnd={handleDrawerTransitionEnd}
       />
 
       {/* メインコンテンツ */}
       <Box
         component="main"
-        sx={{ flexGrow: 1, p: 3, width: { md: `calc(100% - ${drawerWidth}px)` } }}
+        sx={{
+          flexGrow: 1,
+          p: 3,
+          width: { md: `calc(100% - ${drawerWidth}px)` },
+        }}
       >
         <Toolbar />
         <Outlet />
