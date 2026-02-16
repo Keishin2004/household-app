@@ -20,7 +20,7 @@ import TrainIcon from '@mui/icons-material/Train';
 import WorkIcon from '@mui/icons-material/Work';
 import AddBusinessIcon from '@mui/icons-material/AddBusiness';
 import SavingsIcon from '@mui/icons-material/Savings';
-import { Controller, useForm } from 'react-hook-form';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { error } from 'console';
 import { ExpenseCategory, IncomeCategory, Transaction } from '../types';
 import { Category } from '@mui/icons-material';
@@ -31,6 +31,16 @@ interface TransactionFormProps {
   onCloseForm: () => void;
   isEntryDrawerOpen: boolean;
   currentDay: string;
+  onSaveTransaction: (transaction: Schema) => Promise<void>;
+  selectedTransaction: Transaction | null;
+  setSelectedTransaction: React.Dispatch<
+    React.SetStateAction<Transaction | null>
+  >;
+  onDeleteTransaction: (transactionId: string) => Promise<void>;
+  onUpdateTransaction: (
+    transaction: Schema,
+    transactionId: string,
+  ) => Promise<void>;
 }
 
 type incomeExpense = 'income' | 'expense';
@@ -44,6 +54,11 @@ const TransactionForm = ({
   onCloseForm,
   isEntryDrawerOpen,
   currentDay,
+  onSaveTransaction,
+  selectedTransaction,
+  setSelectedTransaction,
+  onDeleteTransaction,
+  onUpdateTransaction,
 }: TransactionFormProps) => {
   const formWidth = 320;
 
@@ -70,6 +85,7 @@ const TransactionForm = ({
     watch,
     formState: { errors },
     handleSubmit,
+    reset,
   } = useForm<Schema>({
     defaultValues: {
       type: 'expense',
@@ -81,13 +97,16 @@ const TransactionForm = ({
     resolver: zodResolver(transactionSchema),
   });
 
+  // 収支タイプを切り替える関数
   const incomeExpenseToggle = (type: incomeExpense) => {
     setValue('type', type);
+    setValue('category', '');
   };
 
   // 収支タイプを監視
   const currentType = watch('type');
 
+  // 収支タイプのカテゴリを選択
   useEffect(() => {
     const newCategories =
       currentType === 'expense' ? expenseCategories : incomeCategories;
@@ -98,8 +117,69 @@ const TransactionForm = ({
     setValue('date', currentDay);
   }, [currentDay]);
 
-  const onSubmit = (data: Schema) => {
-    console.log(data);
+  // 送信処理
+  const onSubmit: SubmitHandler<Schema> = (data) => {
+    if (selectedTransaction) {
+      onUpdateTransaction(data, selectedTransaction.id)
+        .then(() => {
+          setSelectedTransaction(null); // 非同期処理が終了してから実行
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    } else {
+      onSaveTransaction(data)
+        .then(() => {
+          setSelectedTransaction(null); // 非同期処理が終了してから実行
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    }
+
+    reset({
+      type: 'expense',
+      date: currentDay,
+      amount: 0,
+      category: '',
+      content: '',
+    });
+  };
+
+  // 警告を避けるためにcategoriesに選択したcategoryが含まれていることを確認してからvalueを更新する処理
+  useEffect(() => {
+    // 選択肢が更新されたか確認
+    if (selectedTransaction) {
+      const categoryExists = categories.some(
+        (category) => category.label === selectedTransaction.category,
+      ); // 選択されたカテゴリがカテゴリ達の中に含まれているかを確認
+      setValue('category', categoryExists ? selectedTransaction.category : '');
+    }
+  }, [selectedTransaction, categories]);
+
+  // フォーム内容を更新
+  useEffect(() => {
+    if (selectedTransaction) {
+      setValue('type', selectedTransaction.type);
+      setValue('date', selectedTransaction.date);
+      setValue('amount', selectedTransaction.amount);
+      setValue('content', selectedTransaction.content);
+    } else {
+      reset({
+        type: 'expense',
+        date: currentDay,
+        amount: 0,
+        category: '',
+        content: '',
+      });
+    }
+  }, [selectedTransaction]);
+
+  const hadleDelete = () => {
+    if (selectedTransaction) {
+      onDeleteTransaction(selectedTransaction.id);
+      setSelectedTransaction(null);
+    }
   };
 
   return (
@@ -245,8 +325,20 @@ const TransactionForm = ({
             color={currentType === 'income' ? 'primary' : 'error'}
             fullWidth
           >
-            保存
+            {selectedTransaction ? '更新' : '保存'}
           </Button>
+
+          {/* 削除ボタン */}
+          {selectedTransaction && (
+            <Button
+              onClick={hadleDelete}
+              variant="outlined"
+              color={'secondary'}
+              fullWidth
+            >
+              削除
+            </Button>
+          )}
         </Stack>
       </Box>
     </Box>
