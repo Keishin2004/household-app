@@ -185,9 +185,16 @@ const TransactionForm = ({
             name="category"
             control={control}
             render={({ field }) => (
-              <TextField {...field} id="カテゴリ" label="カテゴリ" error={!!errors.category} helperText={errors.category?.message} select>
+              <TextField
+                {...field}
+                id="カテゴリ"
+                label="カテゴリ"
+                error={!!errors.category}
+                helperText={errors.category?.message}
+                select
+              >
                 {categories.map((category, index) => (
-                  <MenuItem value={category.label} key={index} >
+                  <MenuItem value={category.label} key={index}>
                     <ListItemIcon>{category.icon}</ListItemIcon>
                     {category.label}
                   </MenuItem>
@@ -221,7 +228,13 @@ const TransactionForm = ({
             name="content"
             control={control}
             render={({ field }) => (
-              <TextField {...field} label="内容" type="text" error={!!errors.content} helperText={errors.content?.message} />
+              <TextField
+                {...field}
+                label="内容"
+                type="text"
+                error={!!errors.content}
+                helperText={errors.content?.message}
+              />
             )}
           />
 
