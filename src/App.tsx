@@ -26,6 +26,7 @@ import { Schema } from './validations/schema';
 function App() {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [currentMonth, setCurrentMonth] = useState(new Date());
+  const [isLoading, setIsLoading] = useState(true);
 
   // FireStoreエラーかを判定する型ガード
   function isFireStoreError(
@@ -56,6 +57,8 @@ function App() {
         } else {
           console.error('一般的なエラーは：', err);
         }
+      } finally {
+        setIsLoading(false);
       }
     };
     fetchTransactions();
@@ -153,7 +156,17 @@ function App() {
                 />
               }
             />
-            <Route path="/report" element={<Report />} />
+            <Route
+              path="/report"
+              element={
+                <Report
+                  currentMonth={currentMonth}
+                  setCurrentMonth={setCurrentMonth}
+                  monthlyTransactions={monthlyTransactions}
+                  isLoading={isLoading}
+                />
+              }
+            />
             <Route path="*" element={<NoMatch />} />
           </Route>
         </Routes>
