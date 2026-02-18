@@ -1,3 +1,7 @@
+# Reactを用いた簡易家計簿アプリ
+
+プログラミング言語TypeScriptとフレームワークReactを用いたWebアプリケーションの作成練習として, 簡易的な家計簿アプリを作成した. フロントエンド部分のみ実装し, データはFireStoreから取得・更新するようにした.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
