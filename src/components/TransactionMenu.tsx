@@ -26,6 +26,9 @@ interface TransactionMenuProps {
   currentDay: string;
   onAddTransactionForm: () => void;
   onSelectTransaction: (transaction: Transaction) => void;
+  isMobile: boolean;
+  open: boolean;
+  onClose: () => void;
 }
 
 const TransactionMenu = ({
@@ -33,22 +36,40 @@ const TransactionMenu = ({
   currentDay,
   onAddTransactionForm,
   onSelectTransaction,
+  isMobile,
+  open,
+  onClose,
 }: TransactionMenuProps) => {
   const menuDrawerWidth = 320;
   return (
     <Drawer
       sx={{
-        width: menuDrawerWidth,
+        width: isMobile ? 'auto' : menuDrawerWidth,
         '& .MuiDrawer-paper': {
-          width: menuDrawerWidth,
+          width: isMobile ? 'auto' : menuDrawerWidth,
           boxSizing: 'border-box',
           p: 2,
-          top: 64,
-          height: `calc(100% - 64px)`, // AppBarの高さを引いたビューポートの高さ
+
+          ...(isMobile && {
+            height: '80vh',
+            borderTopRightRadius: 8,
+            borderTopLeftRadius: 8,
+          }),
+          ...(!isMobile && {
+            top: 64,
+            height: `calc(100% - 64px)`, // AppBarの高さを引いたビューポートの高さ
+          }),
         },
       }}
-      variant={'permanent'} // Drawerを固定
-      anchor={'right'}
+      variant={isMobile ? 'temporary' : 'permanent'}
+      anchor={isMobile ? 'bottom' : 'right'}
+      open={open}
+      onClose={onClose}
+      slotProps={{
+        root: {
+          keepMounted: true, // Better open performance on mobile.
+        },
+      }}
     >
       <Stack sx={{ height: '100%' }} spacing={2}>
         {/* 日付 */}
@@ -57,7 +78,10 @@ const TransactionMenu = ({
         </Typography>
 
         {/* 収支の表示 */}
-        <DailySummary dailyTransactions={dailyTransactions} />
+        <DailySummary
+          dailyTransactions={dailyTransactions}
+          columns={isMobile ? 3 : 2}
+        />
 
         {/* 内訳タイトル&内訳追加ボタン */}
         <Box
