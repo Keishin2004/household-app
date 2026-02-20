@@ -18,8 +18,6 @@ import {
   updateDoc,
 } from 'firebase/firestore';
 import { db } from './firebase';
-import { ConstructionOutlined } from '@mui/icons-material';
-import { format } from 'date-fns';
 import { formatMonth } from './utils/formatting';
 import { Schema } from './validations/schema';
 

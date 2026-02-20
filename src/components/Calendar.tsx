@@ -8,7 +8,6 @@ import { Balance, CalendarContent, Transaction } from '../types';
 import { calculationDailyBalances } from '../utils/financeCalculations';
 import { formatCurrency } from '../utils/formatting';
 import interactionPlugin, { DateClickArg } from '@fullcalendar/interaction';
-import { Pallet } from '@mui/icons-material';
 import { useTheme } from '@mui/material';
 import { isSameMonth } from 'date-fns';
 

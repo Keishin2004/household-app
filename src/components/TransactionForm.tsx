@@ -16,7 +16,7 @@ import {
   Typography,
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import CloseIcon from '@mui/icons-material/Close'; // 閉じるボタン用のアイコン
+import CloseIcon from '@mui/icons-material/Close';
 import FastfoodIcon from '@mui/icons-material/Fastfood';
 import AlarmIcon from '@mui/icons-material/Alarm';
 import AddHomeIcon from '@mui/icons-material/AddHome';
@@ -27,9 +27,7 @@ import WorkIcon from '@mui/icons-material/Work';
 import AddBusinessIcon from '@mui/icons-material/AddBusiness';
 import SavingsIcon from '@mui/icons-material/Savings';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
-import { error } from 'console';
 import { ExpenseCategory, IncomeCategory, Transaction } from '../types';
-import { Category } from '@mui/icons-material';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Schema, transactionSchema } from '../validations/schema';
 
