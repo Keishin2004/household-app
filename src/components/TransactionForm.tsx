@@ -14,23 +14,23 @@ import {
   Stack,
   TextField,
   Typography,
-} from "@mui/material";
-import React, { useEffect, useState } from "react";
-import CloseIcon from "@mui/icons-material/Close";
-import FastfoodIcon from "@mui/icons-material/Fastfood";
-import AlarmIcon from "@mui/icons-material/Alarm";
-import AddHomeIcon from "@mui/icons-material/AddHome";
-import Diversity3Icon from "@mui/icons-material/Diversity3";
-import SportsTennisIcon from "@mui/icons-material/SportsTennis";
-import TrainIcon from "@mui/icons-material/Train";
-import WorkIcon from "@mui/icons-material/Work";
-import AddBusinessIcon from "@mui/icons-material/AddBusiness";
-import SavingsIcon from "@mui/icons-material/Savings";
-import { Controller, useForm } from "react-hook-form";
-import type { SubmitHandler } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import type { ExpenseCategory, IncomeCategory, Transaction } from "../types";
-import { transactionSchema, type Schema } from "../validations/schema";
+} from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import CloseIcon from '@mui/icons-material/Close';
+import FastfoodIcon from '@mui/icons-material/Fastfood';
+import AlarmIcon from '@mui/icons-material/Alarm';
+import AddHomeIcon from '@mui/icons-material/AddHome';
+import Diversity3Icon from '@mui/icons-material/Diversity3';
+import SportsTennisIcon from '@mui/icons-material/SportsTennis';
+import TrainIcon from '@mui/icons-material/Train';
+import WorkIcon from '@mui/icons-material/Work';
+import AddBusinessIcon from '@mui/icons-material/AddBusiness';
+import SavingsIcon from '@mui/icons-material/Savings';
+import { Controller, useForm } from 'react-hook-form';
+import type { SubmitHandler } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import type { ExpenseCategory, IncomeCategory, Transaction } from '../types';
+import { transactionSchema, type Schema } from '../validations/schema';
 
 interface TransactionFormProps {
   onCloseForm: () => void;
@@ -53,7 +53,7 @@ interface TransactionFormProps {
   setIsDialogOpen: (value: React.SetStateAction<boolean>) => void;
 }
 
-type incomeExpense = "income" | "expense";
+type incomeExpense = 'income' | 'expense';
 
 interface CategoryItem {
   label: IncomeCategory | ExpenseCategory;
@@ -76,18 +76,18 @@ const TransactionForm = ({
   const formWidth = 320;
 
   const expenseCategories: CategoryItem[] = [
-    { label: "食費", icon: <FastfoodIcon fontSize="small" /> },
-    { label: "日用品", icon: <AlarmIcon fontSize="small" /> },
-    { label: "住居費", icon: <AddHomeIcon fontSize="small" /> },
-    { label: "交際費", icon: <Diversity3Icon fontSize="small" /> },
-    { label: "娯楽", icon: <SportsTennisIcon fontSize="small" /> },
-    { label: "交通費", icon: <TrainIcon fontSize="small" /> },
+    { label: '食費', icon: <FastfoodIcon fontSize="small" /> },
+    { label: '日用品', icon: <AlarmIcon fontSize="small" /> },
+    { label: '住居費', icon: <AddHomeIcon fontSize="small" /> },
+    { label: '交際費', icon: <Diversity3Icon fontSize="small" /> },
+    { label: '娯楽', icon: <SportsTennisIcon fontSize="small" /> },
+    { label: '交通費', icon: <TrainIcon fontSize="small" /> },
   ];
 
   const incomeCategories: CategoryItem[] = [
-    { label: "給与", icon: <WorkIcon fontSize="small" /> },
-    { label: "副収入", icon: <AddBusinessIcon fontSize="small" /> },
-    { label: "お小遣い", icon: <SavingsIcon fontSize="small" /> },
+    { label: '給与', icon: <WorkIcon fontSize="small" /> },
+    { label: '副収入', icon: <AddBusinessIcon fontSize="small" /> },
+    { label: 'お小遣い', icon: <SavingsIcon fontSize="small" /> },
   ];
 
   const [categories, setCategories] = useState(expenseCategories);
@@ -101,33 +101,33 @@ const TransactionForm = ({
     reset,
   } = useForm<Schema>({
     defaultValues: {
-      type: "expense",
+      type: 'expense',
       date: currentDay,
       amount: 0,
-      category: "",
-      content: "",
+      category: '',
+      content: '',
     },
     resolver: zodResolver(transactionSchema),
   });
 
   // 収支タイプを切り替える関数
   const incomeExpenseToggle = (type: incomeExpense) => {
-    setValue("type", type);
-    setValue("category", "");
+    setValue('type', type);
+    setValue('category', '');
   };
 
   // 収支タイプを監視
-  const currentType = watch("type");
+  const currentType = watch('type');
 
   // 収支タイプのカテゴリを選択
   useEffect(() => {
     const newCategories =
-      currentType === "expense" ? expenseCategories : incomeCategories;
+      currentType === 'expense' ? expenseCategories : incomeCategories;
     setCategories(newCategories);
   }, [currentType]);
 
   useEffect(() => {
-    setValue("date", currentDay);
+    setValue('date', currentDay);
   }, [currentDay]);
 
   // 送信処理
@@ -154,11 +154,11 @@ const TransactionForm = ({
     }
 
     reset({
-      type: "expense",
+      type: 'expense',
       date: currentDay,
       amount: 0,
-      category: "",
-      content: "",
+      category: '',
+      content: '',
     });
   };
 
@@ -169,24 +169,24 @@ const TransactionForm = ({
       const categoryExists = categories.some(
         (category) => category.label === selectedTransaction.category,
       ); // 選択されたカテゴリがカテゴリ達の中に含まれているかを確認
-      setValue("category", categoryExists ? selectedTransaction.category : "");
+      setValue('category', categoryExists ? selectedTransaction.category : '');
     }
   }, [selectedTransaction, categories]);
 
   // フォーム内容を更新
   useEffect(() => {
     if (selectedTransaction) {
-      setValue("type", selectedTransaction.type);
-      setValue("date", selectedTransaction.date);
-      setValue("amount", selectedTransaction.amount);
-      setValue("content", selectedTransaction.content);
+      setValue('type', selectedTransaction.type);
+      setValue('date', selectedTransaction.date);
+      setValue('amount', selectedTransaction.amount);
+      setValue('content', selectedTransaction.content);
     } else {
       reset({
-        type: "expense",
+        type: 'expense',
         date: currentDay,
         amount: 0,
-        category: "",
-        content: "",
+        category: '',
+        content: '',
       });
     }
   }, [selectedTransaction]);
@@ -205,7 +205,7 @@ const TransactionForm = ({
   const formContet = (
     <>
       {/* 入力エリアヘッダー */}
-      <Box display={"flex"} justifyContent={"space-between"} mb={2}>
+      <Box display={'flex'} justifyContent={'space-between'} mb={2}>
         <Typography variant="h6">入力</Typography>
         {/* 閉じるボタン */}
         <IconButton
@@ -218,7 +218,7 @@ const TransactionForm = ({
         </IconButton>
       </Box>
       {/* フォーム要素 */}
-      <Box component={"form"} onSubmit={handleSubmit(onSubmit)}>
+      <Box component={'form'} onSubmit={handleSubmit(onSubmit)}>
         <Stack spacing={2}>
           {/* 収支切り替えボタン */}
           <Controller
@@ -227,16 +227,16 @@ const TransactionForm = ({
             render={({ field }) => (
               <ButtonGroup fullWidth>
                 <Button
-                  variant={field.value === "expense" ? "contained" : "outlined"}
+                  variant={field.value === 'expense' ? 'contained' : 'outlined'}
                   color="error"
-                  onClick={() => incomeExpenseToggle("expense")}
+                  onClick={() => incomeExpenseToggle('expense')}
                 >
                   支出
                 </Button>
                 <Button
-                  variant={field.value === "income" ? "contained" : "outlined"}
+                  variant={field.value === 'income' ? 'contained' : 'outlined'}
                   color="primary"
-                  onClick={() => incomeExpenseToggle("income")}
+                  onClick={() => incomeExpenseToggle('income')}
                 >
                   収入
                 </Button>
@@ -311,7 +311,7 @@ const TransactionForm = ({
                 {...field}
                 label="金額"
                 type="number"
-                value={field.value === 0 ? "" : field.value}
+                value={field.value === 0 ? '' : field.value}
                 onChange={(e) => {
                   const newValue = parseInt(e.target.value, 10) || 0;
                   field.onChange(newValue);
@@ -341,10 +341,10 @@ const TransactionForm = ({
           <Button
             type="submit"
             variant="contained"
-            color={currentType === "income" ? "primary" : "error"}
+            color={currentType === 'income' ? 'primary' : 'error'}
             fullWidth
           >
-            {selectedTransaction ? "更新" : "保存"}
+            {selectedTransaction ? '更新' : '保存'}
           </Button>
 
           {/* 削除ボタン */}
@@ -352,7 +352,7 @@ const TransactionForm = ({
             <Button
               onClick={hadleDelete}
               variant="outlined"
-              color={"secondary"}
+              color={'secondary'}
               fullWidth
             >
               削除
@@ -371,7 +371,7 @@ const TransactionForm = ({
           open={isDialogOpen}
           onClose={onCloseForm}
           fullWidth
-          maxWidth={"sm"}
+          maxWidth={'sm'}
         >
           <DialogContent>{formContet}</DialogContent>
         </Dialog>
@@ -379,21 +379,21 @@ const TransactionForm = ({
         // PC
         <Box
           sx={{
-            position: "fixed",
+            position: 'fixed',
             top: 64,
-            right: isEntryDrawerOpen ? formWidth : "-2%", // フォームの位置を調整
+            right: isEntryDrawerOpen ? formWidth : '-2%', // フォームの位置を調整
             width: formWidth,
-            height: "100%",
-            bgcolor: "background.paper",
+            height: '100%',
+            bgcolor: 'background.paper',
             zIndex: (theme) => theme.zIndex.drawer - 1,
             transition: (theme) =>
-              theme.transitions.create("right", {
+              theme.transitions.create('right', {
                 easing: theme.transitions.easing.sharp,
                 duration: theme.transitions.duration.enteringScreen,
               }),
             p: 2, // 内部の余白
-            boxSizing: "border-box", // ボーダーとパディングをwidthに含める
-            boxShadow: "0px 0px 15px -5px #777777",
+            boxSizing: 'border-box', // ボーダーとパディングをwidthに含める
+            boxShadow: '0px 0px 15px -5px #777777',
           }}
         >
           {formContet}

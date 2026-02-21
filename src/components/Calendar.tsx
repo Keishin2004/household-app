@@ -1,16 +1,16 @@
-import FullCalendar from "@fullcalendar/react";
-import dayGridPlugin from "@fullcalendar/daygrid";
-import jaLocale from "@fullcalendar/core/locales/ja";
-import "../calendar.css";
-import React from "react";
-import { calculationDailyBalances } from "../utils/financeCalculations";
-import { formatCurrency } from "../utils/formatting";
-import { useTheme } from "@mui/material";
-import { isSameMonth } from "date-fns";
-import type { Balance, CalendarContent, Transaction } from "../types";
-import interactionPlugin from "@fullcalendar/interaction";
-import type { DateClickArg } from "@fullcalendar/interaction";
-import type { DatesSetArg, EventContentArg } from "@fullcalendar/core/index.js";
+import FullCalendar from '@fullcalendar/react';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import jaLocale from '@fullcalendar/core/locales/ja';
+import '../calendar.css';
+import React from 'react';
+import { calculationDailyBalances } from '../utils/financeCalculations';
+import { formatCurrency } from '../utils/formatting';
+import { useTheme } from '@mui/material';
+import { isSameMonth } from 'date-fns';
+import type { Balance, CalendarContent, Transaction } from '../types';
+import interactionPlugin from '@fullcalendar/interaction';
+import type { DateClickArg } from '@fullcalendar/interaction';
+import type { DatesSetArg, EventContentArg } from '@fullcalendar/core/index.js';
 
 interface CalendarProps {
   monthlyTransactions: Transaction[];
@@ -32,7 +32,7 @@ const Calendar = ({
   const theme = useTheme();
   const events = [
     {
-      title: "Meeting",
+      title: 'Meeting',
       start: new Date(),
       income: 300,
       expense: 200,
@@ -88,7 +88,7 @@ const Calendar = ({
 
   const backgroundEvent = {
     start: currentDay,
-    display: "background",
+    display: 'background',
     backgroundColor: theme.palette.incomeColor.light,
   };
 

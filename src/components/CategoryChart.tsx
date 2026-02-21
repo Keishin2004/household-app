@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import { Pie } from "react-chartjs-2";
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
-import type { ChartData } from "chart.js";
+import React, { useState } from 'react';
+import { Pie } from 'react-chartjs-2';
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import type { ChartData } from 'chart.js';
 import {
   Box,
   CircularProgress,
@@ -11,14 +11,14 @@ import {
   Select,
   Typography,
   useTheme,
-} from "@mui/material";
-import type { SelectChangeEvent } from "@mui/material";
+} from '@mui/material';
+import type { SelectChangeEvent } from '@mui/material';
 import type {
   ExpenseCategory,
   IncomeCategory,
   Transaction,
   TransactionType,
-} from "../types";
+} from '../types';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -32,7 +32,7 @@ const CategoryChart = ({
   isLoading,
 }: CategoryChartProps) => {
   const theme = useTheme();
-  const [selectedType, setSelectedType] = useState<TransactionType>("expense");
+  const [selectedType, setSelectedType] = useState<TransactionType>('expense');
 
   const handleChangeType = (e: SelectChangeEvent<TransactionType>) => {
     setSelectedType(e.target.value as TransactionType);
@@ -81,14 +81,14 @@ const CategoryChart = ({
   const getCategoryColor = (
     category: IncomeCategory | ExpenseCategory,
   ): string => {
-    if (selectedType === "income") {
+    if (selectedType === 'income') {
       return incomeCategoryColor[category as IncomeCategory];
     } else {
       return expenseCategoryColor[category as ExpenseCategory];
     }
   };
 
-  const data: ChartData<"pie"> = {
+  const data: ChartData<'pie'> = {
     labels: categoryLabels,
     datasets: [
       {
@@ -115,16 +115,16 @@ const CategoryChart = ({
           label="収支の種類"
           onChange={handleChangeType}
         >
-          <MenuItem value={"income"}>収入</MenuItem>
-          <MenuItem value={"expense"}>支出</MenuItem>
+          <MenuItem value={'income'}>収入</MenuItem>
+          <MenuItem value={'expense'}>支出</MenuItem>
         </Select>
       </FormControl>
       <Box
         sx={{
           flexGrow: 1,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
         }}
       >
         {isLoading ? (

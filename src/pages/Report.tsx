@@ -1,10 +1,10 @@
-import { Grid, Paper } from "@mui/material";
-import React from "react";
-import MonthSelector from "../components/MonthSelector";
-import CategoryChart from "../components/CategoryChart";
-import BarChart from "../components/BarChart";
-import TransactionTable from "../components/TransactionTable";
-import type { Transaction } from "../types";
+import { Grid, Paper } from '@mui/material';
+import React from 'react';
+import MonthSelector from '../components/MonthSelector';
+import CategoryChart from '../components/CategoryChart';
+import BarChart from '../components/BarChart';
+import TransactionTable from '../components/TransactionTable';
+import type { Transaction } from '../types';
 
 interface ReportProps {
   currentMonth: Date;
@@ -24,9 +24,9 @@ const Report = ({
   onDeleteTransactions,
 }: ReportProps) => {
   const commonPaperStyle = {
-    height: "400px",
-    display: "flex",
-    flexDirection: "column",
+    height: '400px',
+    display: 'flex',
+    flexDirection: 'column',
     p: 2,
   };
   return (

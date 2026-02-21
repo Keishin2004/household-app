@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -7,13 +7,13 @@ import {
   Title,
   Tooltip,
   Legend,
-} from "chart.js";
-import type { ChartData } from "chart.js";
-import { Bar } from "react-chartjs-2";
-import type { Transaction } from "../types";
-import { calculationDailyBalances } from "../utils/financeCalculations";
-import { Box, Typography, useTheme } from "@mui/material";
-import CircularProgress from "@mui/material/CircularProgress";
+} from 'chart.js';
+import type { ChartData } from 'chart.js';
+import { Bar } from 'react-chartjs-2';
+import type { Transaction } from '../types';
+import { calculationDailyBalances } from '../utils/financeCalculations';
+import { Box, Typography, useTheme } from '@mui/material';
+import CircularProgress from '@mui/material/CircularProgress';
 
 ChartJS.register(
   CategoryScale,
@@ -40,7 +40,7 @@ const BarChart = ({ monthlyTransactions, isLoading }: BarChartProps) => {
       //   },
       title: {
         display: true,
-        text: "日別収支",
+        text: '日別収支',
       },
     },
   };
@@ -52,16 +52,16 @@ const BarChart = ({ monthlyTransactions, isLoading }: BarChartProps) => {
   const expenseData = dateLabels.map((day) => dailyBalances[day].expense);
   const incomeData = dateLabels.map((day) => dailyBalances[day].income);
 
-  const data: ChartData<"bar"> = {
+  const data: ChartData<'bar'> = {
     labels: dateLabels,
     datasets: [
       {
-        label: "支出",
+        label: '支出',
         data: expenseData,
         backgroundColor: theme.palette.expenseColor.light,
       },
       {
-        label: "収入",
+        label: '収入',
         data: incomeData,
         backgroundColor: theme.palette.incomeColor.light,
       },
@@ -71,9 +71,9 @@ const BarChart = ({ monthlyTransactions, isLoading }: BarChartProps) => {
     <Box
       sx={{
         flexGrow: 1,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
       }}
     >
       {isLoading ? (

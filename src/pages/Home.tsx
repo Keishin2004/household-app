@@ -1,13 +1,13 @@
-import { Box, useMediaQuery, useTheme } from "@mui/material";
-import React, { useState } from "react";
-import MonthlySummary from "../components/MonthlySummary";
-import Calendar from "../components/Calendar";
-import TransactionMenu from "../components/TransactionMenu";
-import TransactionForm from "../components/TransactionForm";
-import { format } from "date-fns";
-import type { DateClickArg } from "@fullcalendar/interaction";
-import type { Transaction } from "../types";
-import type { Schema } from "../validations/schema";
+import { Box, useMediaQuery, useTheme } from '@mui/material';
+import React, { useState } from 'react';
+import MonthlySummary from '../components/MonthlySummary';
+import Calendar from '../components/Calendar';
+import TransactionMenu from '../components/TransactionMenu';
+import TransactionForm from '../components/TransactionForm';
+import { format } from 'date-fns';
+import type { DateClickArg } from '@fullcalendar/interaction';
+import type { Transaction } from '../types';
+import type { Schema } from '../validations/schema';
 
 interface HomeProps {
   monthlyTransactions: Transaction[];
@@ -29,7 +29,7 @@ const Home = ({
   onDeleteTransactions,
   onUpdateTransaction,
 }: HomeProps) => {
-  const today = format(new Date(), "yyyy-MM-dd");
+  const today = format(new Date(), 'yyyy-MM-dd');
   const [currentDay, setCurrentDay] = useState(today);
   const [isEntryDrawerOpen, setIsEntryDrawerOpen] = useState(false);
   const [selectedTransaction, setSelectedTransaction] =
@@ -38,7 +38,7 @@ const Home = ({
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("lg"));
+  const isMobile = useMediaQuery(theme.breakpoints.down('lg'));
 
   // 1日分のデータを取得
   const dailyTransactions = monthlyTransactions.filter((transaction) => {
@@ -90,7 +90,7 @@ const Home = ({
   };
 
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box sx={{ display: 'flex' }}>
       {/* 左側コンテンツ */}
       <Box sx={{ flexGrow: 1 }}>
         <MonthlySummary monthlyTransactions={monthlyTransactions} />

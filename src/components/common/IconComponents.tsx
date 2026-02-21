@@ -1,14 +1,14 @@
-import FastfoodIcon from "@mui/icons-material/Fastfood";
-import AlarmIcon from "@mui/icons-material/Alarm";
-import AddHomeIcon from "@mui/icons-material/AddHome";
-import Diversity3Icon from "@mui/icons-material/Diversity3";
-import SportsTennisIcon from "@mui/icons-material/SportsTennis";
-import TrainIcon from "@mui/icons-material/Train";
-import WorkIcon from "@mui/icons-material/Work";
-import AddBusinessIcon from "@mui/icons-material/AddBusiness";
-import SavingsIcon from "@mui/icons-material/Savings";
-import React from "react";
-import type { ExpenseCategory, IncomeCategory } from "../../types";
+import FastfoodIcon from '@mui/icons-material/Fastfood';
+import AlarmIcon from '@mui/icons-material/Alarm';
+import AddHomeIcon from '@mui/icons-material/AddHome';
+import Diversity3Icon from '@mui/icons-material/Diversity3';
+import SportsTennisIcon from '@mui/icons-material/SportsTennis';
+import TrainIcon from '@mui/icons-material/Train';
+import WorkIcon from '@mui/icons-material/Work';
+import AddBusinessIcon from '@mui/icons-material/AddBusiness';
+import SavingsIcon from '@mui/icons-material/Savings';
+import React from 'react';
+import type { ExpenseCategory, IncomeCategory } from '../../types';
 
 const IconComponents: Record<
   IncomeCategory | ExpenseCategory,

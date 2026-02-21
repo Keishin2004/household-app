@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
-import "./App.css";
-import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
-import Home from "./pages/Home";
-import Report from "./pages/Report";
-import NoMatch from "./pages/NoMatch";
-import AppLayout from "./components/layout/AppLayout";
-import { theme } from "./theme/theme";
-import { ThemeProvider } from "@emotion/react";
-import { CssBaseline } from "@mui/material";
-import type { Transaction } from "./types/index";
+import React, { useEffect, useState } from 'react';
+import './App.css';
+import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+import Home from './pages/Home';
+import Report from './pages/Report';
+import NoMatch from './pages/NoMatch';
+import AppLayout from './components/layout/AppLayout';
+import { theme } from './theme/theme';
+import { ThemeProvider } from '@emotion/react';
+import { CssBaseline } from '@mui/material';
+import type { Transaction } from './types/index';
 import {
   addDoc,
   collection,
@@ -16,10 +16,10 @@ import {
   doc,
   getDocs,
   updateDoc,
-} from "firebase/firestore";
-import { db } from "./firebase";
-import { formatMonth } from "./utils/formatting";
-import type { Schema } from "./validations/schema";
+} from 'firebase/firestore';
+import { db } from './firebase';
+import { formatMonth } from './utils/formatting';
+import type { Schema } from './validations/schema';
 
 function App() {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
@@ -30,14 +30,14 @@ function App() {
   function isFireStoreError(
     err: unknown,
   ): err is { code: string; message: string } {
-    return typeof err === "object" && err !== null && "code" in err;
+    return typeof err === 'object' && err !== null && 'code' in err;
   }
 
   // FireStoreのデータをすべて取得
   useEffect(() => {
     const fetchTransactions = async () => {
       try {
-        const querySnapshot = await getDocs(collection(db, "Transactions"));
+        const querySnapshot = await getDocs(collection(db, 'Transactions'));
         const transactionsData = querySnapshot.docs.map((doc) => {
           // doc.data() is never undefined for query doc snapshots
           // console.log(doc.id, " => ", doc.data());
@@ -53,7 +53,7 @@ function App() {
           console.error(err.message);
           console.error(err.code);
         } else {
-          console.error("一般的なエラーは：", err);
+          console.error('一般的なエラーは：', err);
         }
       } finally {
         setIsLoading(false);
@@ -72,8 +72,8 @@ function App() {
     try {
       // firestoreにデータを保存
       // Add a new document with a generated id.
-      const docRef = await addDoc(collection(db, "Transactions"), transaction);
-      console.log("Document written with ID: ", docRef.id);
+      const docRef = await addDoc(collection(db, 'Transactions'), transaction);
+      console.log('Document written with ID: ', docRef.id);
 
       const newTransaction = {
         id: docRef.id,
@@ -89,7 +89,7 @@ function App() {
         console.error(err.message);
         console.error(err.code);
       } else {
-        console.error("一般的なエラーは：", err);
+        console.error('一般的なエラーは：', err);
       }
     }
   };
@@ -104,7 +104,7 @@ function App() {
 
       // firestoreのデータ削除
       for (const id of idsToDelete) {
-        await deleteDoc(doc(db, "Transactions", id));
+        await deleteDoc(doc(db, 'Transactions', id));
       }
       const filterdTransactions = transactions.filter(
         (transaction) => !idsToDelete.includes(transaction.id),
@@ -116,7 +116,7 @@ function App() {
         console.error(err.message);
         console.error(err.code);
       } else {
-        console.error("一般的なエラーは：", err);
+        console.error('一般的なエラーは：', err);
       }
     }
   };
@@ -127,7 +127,7 @@ function App() {
   ) => {
     try {
       // firestoreのデータ更新
-      const docRef = doc(db, "Transactions", transactionId);
+      const docRef = doc(db, 'Transactions', transactionId);
       await updateDoc(docRef, transaction);
       const updatedTransactions = transactions.map((t) =>
         t.id === transactionId ? { ...t, ...transaction } : t,
@@ -139,7 +139,7 @@ function App() {
         console.error(err.message);
         console.error(err.code);
       } else {
-        console.error("一般的なエラーは：", err);
+        console.error('一般的なエラーは：', err);
       }
     }
   };

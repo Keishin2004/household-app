@@ -10,16 +10,16 @@ import {
   ListItem,
   Stack,
   Typography,
-} from "@mui/material";
-import React from "react";
+} from '@mui/material';
+import React from 'react';
 //アイコン
-import NotesIcon from "@mui/icons-material/Notes";
-import AddCircleIcon from "@mui/icons-material/AddCircle";
-import DailySummary from "./DailySummary";
+import NotesIcon from '@mui/icons-material/Notes';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+import DailySummary from './DailySummary';
 
-import { formatCurrency } from "../utils/formatting";
-import IconComponents from "./common/IconComponents";
-import type { Transaction } from "../types";
+import { formatCurrency } from '../utils/formatting';
+import IconComponents from './common/IconComponents';
+import type { Transaction } from '../types';
 
 interface TransactionMenuProps {
   dailyTransactions: Transaction[];
@@ -44,14 +44,14 @@ const TransactionMenu = ({
   return (
     <Drawer
       sx={{
-        width: isMobile ? "auto" : menuDrawerWidth,
-        "& .MuiDrawer-paper": {
-          width: isMobile ? "auto" : menuDrawerWidth,
-          boxSizing: "border-box",
+        width: isMobile ? 'auto' : menuDrawerWidth,
+        '& .MuiDrawer-paper': {
+          width: isMobile ? 'auto' : menuDrawerWidth,
+          boxSizing: 'border-box',
           p: 2,
 
           ...(isMobile && {
-            height: "80vh",
+            height: '80vh',
             borderTopRightRadius: 8,
             borderTopLeftRadius: 8,
           }),
@@ -61,8 +61,8 @@ const TransactionMenu = ({
           }),
         },
       }}
-      variant={isMobile ? "temporary" : "permanent"}
-      anchor={isMobile ? "bottom" : "right"}
+      variant={isMobile ? 'temporary' : 'permanent'}
+      anchor={isMobile ? 'bottom' : 'right'}
       open={open}
       onClose={onClose}
       slotProps={{
@@ -71,9 +71,9 @@ const TransactionMenu = ({
         },
       }}
     >
-      <Stack sx={{ height: "100%" }} spacing={2}>
+      <Stack sx={{ height: '100%' }} spacing={2}>
         {/* 日付 */}
-        <Typography fontWeight={"fontWeightBold"}>
+        <Typography fontWeight={'fontWeightBold'}>
           日時： {currentDay}
         </Typography>
 
@@ -86,9 +86,9 @@ const TransactionMenu = ({
         {/* 内訳タイトル&内訳追加ボタン */}
         <Box
           sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
             p: 1,
           }}
         >
@@ -108,16 +108,16 @@ const TransactionMenu = ({
         </Box>
 
         {/* 取引一覧 */}
-        <Box sx={{ flexGrow: 1, overflowY: "auto" }}>
+        <Box sx={{ flexGrow: 1, overflowY: 'auto' }}>
           <List aria-label="取引履歴">
             <Stack spacing={2}>
               {dailyTransactions.map((transaction) => (
                 <ListItem key={transaction.id} disablePadding>
                   <Card
                     sx={{
-                      width: "100%",
+                      width: '100%',
                       backgroundColor:
-                        transaction.type === "income"
+                        transaction.type === 'income'
                           ? (theme) => theme.palette.incomeColor.light
                           : (theme) => theme.palette.expenseColor.light,
                     }}
@@ -152,10 +152,10 @@ const TransactionMenu = ({
                           <Grid size={4.5}>
                             <Typography
                               gutterBottom
-                              textAlign={"right"}
+                              textAlign={'right'}
                               color="text.secondary"
                               sx={{
-                                wordBreak: "break-all",
+                                wordBreak: 'break-all',
                               }}
                             >
                               ¥{formatCurrency(transaction.amount)}
