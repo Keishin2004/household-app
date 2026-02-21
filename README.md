@@ -1,3 +1,7 @@
+# React+Viteを用いた簡易家計簿アプリ
+
+プログラミング言語TypeScriptとフレームワークReactを用いたWebアプリケーションの作成練習として, 簡易的な家計簿アプリを作成した. フロントエンド部分のみ実装し, データはFireStoreから取得・更新するようにした.
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
