@@ -30,15 +30,6 @@ const Calendar = ({
   onDateClick,
 }: CalendarProps) => {
   const theme = useTheme();
-  const events = [
-    {
-      title: 'Meeting',
-      start: new Date(),
-      income: 300,
-      expense: 200,
-      balance: 100,
-    },
-  ];
 
   const renderEventContent = (eventInfo: EventContentArg) => {
     return (
