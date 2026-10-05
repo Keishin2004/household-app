@@ -1,77 +1,107 @@
-# React+Viteを用いた簡易家計簿アプリ
+# 家計簿アプリ (React + TypeScript + Vite)
 
-プログラミング言語TypeScriptとフレームワークReactを用いたWebアプリケーションの作成練習として, 簡易的な家計簿アプリを作成した. フロントエンド部分のみ実装し, データはFireStoreから取得・更新するようにした.
+TypeScript と React を用いた Web アプリケーション作成の練習として作成した、簡易的な家計簿アプリです。
+フロントエンドのみを実装し、データは Cloud Firestore から取得・更新しています。
 
-# React + TypeScript + Vite
+**公開 URL: https://household-ts-e1a6c.web.app**
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 主な機能
 
-Currently, two official plugins are available:
+### ホーム画面 (`/`)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **月間サマリー**: 表示中の月の収入・支出・残高を表示
+- **カレンダー**: 日ごとの収入・支出・残高をカレンダー上に表示し、日付をクリックするとその日の取引を確認可能
+- **日別サマリー / 取引一覧**: 選択した日の収支と取引内容を一覧表示
+- **取引の登録・編集・削除**: フォームから収入 / 支出の登録、既存取引の更新・削除が可能
 
-## React Compiler
+### レポート画面 (`/report`)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **月の切り替え**: 表示する月を選択
+- **カテゴリ別円グラフ**: 収入 / 支出を切り替えてカテゴリごとの割合を表示
+- **日別棒グラフ**: 日ごとの収入・支出を棒グラフで表示
+- **取引テーブル**: 月間の取引を一覧表示し、複数選択して一括削除が可能
 
-## Expanding the ESLint configuration
+### カテゴリ
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+| 種類 | カテゴリ                                       |
+| ---- | ---------------------------------------------- |
+| 収入 | 給与 / 副収入 / お小遣い                       |
+| 支出 | 食費 / 日用品 / 住居費 / 交際費 / 娯楽 / 交通費 |
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## 使用技術
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+| 分類           | 技術                                     |
+| -------------- | ---------------------------------------- |
+| 言語           | TypeScript                               |
+| フレームワーク | React 19 / Vite                          |
+| UI             | MUI (Material UI), Emotion               |
+| ルーティング   | React Router                             |
+| カレンダー     | FullCalendar                             |
+| グラフ         | Chart.js / react-chartjs-2               |
+| フォーム       | React Hook Form + Zod (バリデーション)   |
+| 日付処理       | date-fns, MUI X Date Pickers             |
+| データベース   | Cloud Firestore                          |
+| ホスティング   | Firebase Hosting                         |
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## ディレクトリ構成
+
+```
+src/
+├── App.tsx            # ルーティングと Firestore への CRUD 処理
+├── firebase.ts        # Firebase の初期化
+├── pages/             # Home / Report / NoMatch ページ
+├── components/        # カレンダー・グラフ・フォームなどの UI コンポーネント
+│   ├── layout/        # 共通レイアウト
+│   └── common/        # サイドバー・アイコン
+├── types/             # 型定義
+├── utils/             # 日付フォーマット・収支計算
+├── validations/       # Zod スキーマ
+└── theme/             # MUI テーマ
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## ローカルでの実行方法
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### 1. 依存パッケージのインストール
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
+```
+
+### 2. 環境変数の設定
+
+プロジェクト直下に `.env` を作成し、Firebase プロジェクトの設定値を記入します。
+
+```
+VITE_API_KEY=
+VITE_AUTH_DOMAIN=
+VITE_PROJECT_ID=
+VITE_STORAGE_BUCKET=
+VITE_MESSAGING_SENDER_ID=
+VITE_APP_ID=
+```
+
+Firestore には `Transactions` コレクションを使用します。
+
+### 3. 開発サーバーの起動
+
+```bash
+npm run dev
+```
+
+## スクリプト
+
+| コマンド          | 内容                         |
+| ----------------- | ---------------------------- |
+| `npm run dev`     | 開発サーバーを起動           |
+| `npm run build`   | 型チェック後に本番ビルド     |
+| `npm run preview` | ビルド結果をローカルで確認   |
+| `npm run lint`    | ESLint による静的解析        |
+
+## デプロイ
+
+Firebase Hosting にデプロイしています。
+
+```bash
+npm run build
+firebase deploy
 ```
