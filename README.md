@@ -5,6 +5,16 @@ TypeScript と React を用いた Web アプリケーション作成の練習と
 
 **公開 URL: https://household-ts-e1a6c.web.app**
 
+## スクリーンショット
+
+### ホーム画面
+
+![ホーム画面](docs/images/home.png)
+
+### レポート画面
+
+![レポート画面](docs/images/report.png)
+
 ## 主な機能
 
 ### ホーム画面 (`/`)
